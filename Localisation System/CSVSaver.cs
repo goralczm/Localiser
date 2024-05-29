@@ -1,32 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Windows.Markup;
+﻿using System.Text;
 
 namespace Localisation_System
 {
     internal class CSVSaver
     {
-        public void SaveDictionaryToFile(string path, Dictionary<string, Dictionary<string, string>> dict)
+        public void SaveFileViaDialog(Dictionary<string, Dictionary<string, string>> dict)
         {
-            List<string> tags = dict.Keys.ToList();
-            List<string> keys = dict[tags[0]].Keys.ToList();
-
-            List<string> vals = ["key", .. tags];
-
-            string firstLine = BuildLine(vals);
-            List<string> lines = new List<string> { firstLine };
-
-            keys.ForEach(k =>
-            {
-                List<string> vals = [ k ];
-                tags.ForEach(t => vals.Add(dict[t][k]));
-                lines.Add(BuildLine(vals));
-            });
-
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
                 saveFileDialog.InitialDirectory = "c:\\";
@@ -37,15 +16,21 @@ namespace Localisation_System
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string filePath = saveFileDialog.FileName;
-                    var fileStream = saveFileDialog.OpenFile();
+                    SaveFileViaPath(filePath, dict);
+                }
+            }
+        }
 
-                    using (StreamWriter writer = new StreamWriter(fileStream))
-                    {
-                        foreach (string line in lines)
-                        {
-                            writer.Write(line);
-                        }
-                    }
+        public void SaveFileViaPath(string path, Dictionary<string, Dictionary<string, string>> dict)
+        {
+            LocalisationSystem.LastPath = path;
+            List<string> lines = DictionaryToCSVLines(dict);
+
+            using (StreamWriter writer = new StreamWriter(path))
+            {
+                foreach (string line in lines)
+                {
+                    writer.Write(line);
                 }
             }
         }
@@ -64,6 +49,26 @@ namespace Localisation_System
             line.Append(CSVFileStructure.LINE_SEPARATOR);
 
             return line.ToString();
+        }
+
+        private List<string> DictionaryToCSVLines(Dictionary<string, Dictionary<string, string>> dict)
+        {
+            List<string> tags = dict.Keys.ToList();
+            List<string> keys = dict[tags[0]].Keys.ToList();
+
+            List<string> vals = ["key", .. tags];
+
+            string firstLine = BuildLine(vals);
+            List<string> lines = new List<string> { firstLine };
+
+            keys.ForEach(k =>
+            {
+                List<string> vals = [k];
+                tags.ForEach(t => vals.Add(dict[t][k]));
+                lines.Add(BuildLine(vals));
+            });
+
+            return lines;
         }
     }
 }

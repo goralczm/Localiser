@@ -6,20 +6,6 @@ namespace Localisation_System
     {
         private string _csvFile = "";
 
-        public void LoadCSVFromPath(string path)
-        {
-            try
-            {
-                StreamReader sr = new StreamReader(path);
-                _csvFile = sr.ReadToEnd();
-                sr.Close();
-            }
-            catch
-            {
-                MessageBox.Show($"File at {path} could not be found!");
-            }
-        }
-
         public void LoadCSVFromDialog()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -32,13 +18,17 @@ namespace Localisation_System
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string filePath = openFileDialog.FileName;
-                    var fileStream = openFileDialog.OpenFile();
-
-                    using (StreamReader reader = new StreamReader(fileStream))
-                    {
-                        _csvFile = reader.ReadToEnd();
-                    }
+                    LoadCSVFromPath(filePath);
                 }
+            }
+        }
+
+        public void LoadCSVFromPath(string path)
+        {
+            LocalisationSystem.LastPath = path;
+            using (StreamReader reader = new StreamReader(path))
+            {
+                _csvFile = reader.ReadToEnd();
             }
         }
 

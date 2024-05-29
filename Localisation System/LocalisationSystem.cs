@@ -2,9 +2,10 @@
 {
     internal class LocalisationSystem
     {
-        private const string FILE_PATH = "C:\\Users\\Maciej\\Documents\\Unity Projects\\Defendron\\Assets\\Resources\\Localisation\\localisation.csv";
+        public static string LastPath;
 
         private Dictionary<string, Dictionary<string, string>> _localisedTextsByTag = new Dictionary<string, Dictionary<string, string>>();
+
         private CSVLoader _csvLoader = new CSVLoader();
         private CSVSaver _csvSaver = new CSVSaver();
 
@@ -12,7 +13,6 @@
         {
             _csvLoader = new CSVLoader();
             _csvLoader.LoadCSVFromDialog();
-            //_csvLoader.LoadCSVFromPath(FILE_PATH);
 
             UpdateDictionaries();
         }
@@ -49,9 +49,20 @@
             _localisedTextsByTag[tag][key] = value;
         }
 
-        public void SaveToFile()
+        public void SaveViaDialog()
         {
-            _csvSaver.SaveDictionaryToFile("lala", _localisedTextsByTag);
+            _csvSaver.SaveFileViaDialog(_localisedTextsByTag);
+        }
+
+        public void SaveViaPath()
+        {
+            if (LastPath == "")
+            {
+                SaveViaDialog();
+                return;
+            }
+
+            _csvSaver.SaveFileViaPath(LastPath, _localisedTextsByTag);
         }
 
         public IEnumerable<string> GetTags()

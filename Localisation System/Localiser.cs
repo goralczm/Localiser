@@ -8,10 +8,6 @@ namespace Localisation_System
         {
             InitializeComponent();
 
-            InitalizeLocalisation();
-            UpdateListBoxWithKeys();
-            UpdateComboBoxWithTags();
-
             localisationKeysListBox.SelectedIndexChanged += UpdateLocalisedText;
             localisationTagsComboBox.SelectedIndexChanged += UpdateLocalisedText;
         }
@@ -37,6 +33,31 @@ namespace Localisation_System
                 key = localisationKeysListBox.SelectedItem.ToString();
 
             return new KeyValuePair<string, string>(tag, key);
+        }
+
+        private void localisedKeysSearchTextBox_TextChanged(object sender, EventArgs e)
+        {
+            UpdateListBoxWithKeys();
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            SaveChanges();
+        }
+
+        private void SaveChanges()
+        {
+            KeyValuePair<string, string> tagAndKey = GetCurrentTagAndKey();
+            string newVal = localisedTextRichTextBox.Text;
+
+            localiser.UpdateKeyInTag(tagAndKey.Key, tagAndKey.Value, newVal);
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InitalizeLocalisation();
+            UpdateListBoxWithKeys();
+            UpdateComboBoxWithTags();
         }
 
         private void InitalizeLocalisation()
@@ -67,22 +88,16 @@ namespace Localisation_System
                 localisationTagsComboBox.SelectedIndex = 0;
         }
 
-        private void localisedKeysSearchTextBox_TextChanged(object sender, EventArgs e)
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UpdateListBoxWithKeys();
+            SaveChanges();
+            localiser.SaveViaPath();
         }
 
-        private void saveButton_Click(object sender, EventArgs e)
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            KeyValuePair<string, string> tagAndKey = GetCurrentTagAndKey();
-            string newVal = localisedTextRichTextBox.Text;
-
-            localiser.UpdateKeyInTag(tagAndKey.Key, tagAndKey.Value, newVal);
-        }
-
-        private void saveToFileButton_Click(object sender, EventArgs e)
-        {
-            localiser.SaveToFile();
+            SaveChanges();
+            localiser.SaveViaDialog();
         }
     }
 }
