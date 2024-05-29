@@ -32,52 +32,79 @@
             localisationTagsComboBox = new ComboBox();
             localisedTextRichTextBox = new RichTextBox();
             localisedKeysSearchTextBox = new TextBox();
+            saveButton = new Button();
+            saveToFileButton = new Button();
             SuspendLayout();
             // 
             // localisationKeysListBox
             // 
             localisationKeysListBox.FormattingEnabled = true;
-            localisationKeysListBox.ItemHeight = 15;
-            localisationKeysListBox.Location = new Point(12, 41);
+            localisationKeysListBox.Location = new Point(14, 55);
+            localisationKeysListBox.Margin = new Padding(3, 4, 3, 4);
             localisationKeysListBox.Name = "localisationKeysListBox";
-            localisationKeysListBox.Size = new Size(222, 379);
+            localisationKeysListBox.Size = new Size(253, 504);
             localisationKeysListBox.TabIndex = 1;
             // 
             // localisationTagsComboBox
             // 
             localisationTagsComboBox.FormattingEnabled = true;
-            localisationTagsComboBox.Location = new Point(240, 12);
+            localisationTagsComboBox.Location = new Point(274, 16);
+            localisationTagsComboBox.Margin = new Padding(3, 4, 3, 4);
             localisationTagsComboBox.Name = "localisationTagsComboBox";
-            localisationTagsComboBox.Size = new Size(121, 23);
+            localisationTagsComboBox.Size = new Size(138, 28);
             localisationTagsComboBox.TabIndex = 2;
             // 
             // localisedTextRichTextBox
             // 
-            localisedTextRichTextBox.Location = new Point(489, 12);
+            localisedTextRichTextBox.Location = new Point(559, 16);
+            localisedTextRichTextBox.Margin = new Padding(3, 4, 3, 4);
             localisedTextRichTextBox.Name = "localisedTextRichTextBox";
-            localisedTextRichTextBox.ReadOnly = true;
-            localisedTextRichTextBox.Size = new Size(299, 426);
+            localisedTextRichTextBox.Size = new Size(341, 460);
             localisedTextRichTextBox.TabIndex = 3;
             localisedTextRichTextBox.Text = "";
             // 
             // localisedKeysSearchTextBox
             // 
-            localisedKeysSearchTextBox.Location = new Point(12, 12);
+            localisedKeysSearchTextBox.Location = new Point(14, 16);
+            localisedKeysSearchTextBox.Margin = new Padding(3, 4, 3, 4);
             localisedKeysSearchTextBox.Name = "localisedKeysSearchTextBox";
-            localisedKeysSearchTextBox.Size = new Size(222, 23);
+            localisedKeysSearchTextBox.Size = new Size(253, 27);
             localisedKeysSearchTextBox.TabIndex = 4;
             localisedKeysSearchTextBox.TextChanged += localisedKeysSearchTextBox_TextChanged;
             // 
-            // Form1
+            // saveButton
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            saveButton.Location = new Point(559, 483);
+            saveButton.Name = "saveButton";
+            saveButton.Size = new Size(343, 29);
+            saveButton.TabIndex = 5;
+            saveButton.Text = "Save";
+            saveButton.UseVisualStyleBackColor = true;
+            saveButton.Click += saveButton_Click;
+            // 
+            // saveToFileButton
+            // 
+            saveToFileButton.Location = new Point(559, 518);
+            saveToFileButton.Name = "saveToFileButton";
+            saveToFileButton.Size = new Size(343, 29);
+            saveToFileButton.TabIndex = 6;
+            saveToFileButton.Text = "Save To File";
+            saveToFileButton.UseVisualStyleBackColor = true;
+            saveToFileButton.Click += saveToFileButton_Click;
+            // 
+            // Localiser
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 600);
+            Controls.Add(saveToFileButton);
+            Controls.Add(saveButton);
             Controls.Add(localisedKeysSearchTextBox);
             Controls.Add(localisedTextRichTextBox);
             Controls.Add(localisationTagsComboBox);
             Controls.Add(localisationKeysListBox);
-            Name = "Form1";
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "Localiser";
             Text = "Localisation System";
             ResumeLayout(false);
             PerformLayout();
@@ -88,5 +115,7 @@
         private ComboBox localisationTagsComboBox;
         private RichTextBox localisedTextRichTextBox;
         private TextBox localisedKeysSearchTextBox;
+        private Button saveButton;
+        private Button saveToFileButton;
     }
 }

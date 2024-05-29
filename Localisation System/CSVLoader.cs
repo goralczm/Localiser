@@ -6,10 +6,6 @@ namespace Localisation_System
     {
         private string _csvFile = "";
 
-        private char _lineSeparator = '\n';
-        private char _surround = '"';
-        private string[] _fieldSeparator = { "\",\"" };
-
         public void LoadCSVFromPath(string path)
         {
             try
@@ -50,11 +46,11 @@ namespace Localisation_System
         {
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
 
-            string[] lines = _csvFile.Split(_lineSeparator);
+            string[] lines = _csvFile.Split(CSVFileStructure.LINE_SEPARATOR);
 
             int attributeIndex = -1;
 
-            string[] headers = lines[0].Split(_fieldSeparator, System.StringSplitOptions.None);
+            string[] headers = lines[0].Split(CSVFileStructure.FIELD_SEPARATOR, System.StringSplitOptions.None);
 
             for (int i = 0; i < headers.Length; i++)
             {
@@ -78,9 +74,9 @@ namespace Localisation_System
 
                 for (int f = 0; f < fields.Length; f++)
                 {
-                    fields[f] = fields[f].TrimStart(' ', _surround);
+                    fields[f] = fields[f].TrimStart(' ', CSVFileStructure.SURROUND);
                     fields[f] = fields[f].TrimEnd('\r');
-                    fields[f] = fields[f].TrimEnd(_surround);
+                    fields[f] = fields[f].TrimEnd(CSVFileStructure.SURROUND);
                 }
 
                 if (fields.Length > attributeIndex)
