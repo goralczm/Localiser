@@ -32,6 +32,24 @@ namespace Localisation_System
             }
         }
 
+        public List<string> GetTags()
+        {
+            string[] lines = _csvFile.Split(CSVFileStructure.LINE_SEPARATOR);
+            string[] headers = lines[0].Split(CSVFileStructure.FIELD_SEPARATOR, System.StringSplitOptions.None);
+
+            List<string> tags = new List<string>();
+            for (int i = 1; i < headers.Length; i++)
+            {
+                headers[i] = headers[i].TrimStart(' ', CSVFileStructure.SURROUND);
+                headers[i] = headers[i].TrimEnd('\r');
+                headers[i] = headers[i].TrimEnd(CSVFileStructure.SURROUND);
+
+                tags.Add(headers[i]);
+            }
+
+            return tags;
+        }
+
         public Dictionary<string, string> GetDictionaryValues(string tag)
         {
             Dictionary<string, string> dictionary = new Dictionary<string, string>();

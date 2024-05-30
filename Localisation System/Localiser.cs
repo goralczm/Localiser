@@ -56,8 +56,7 @@ namespace Localisation_System
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InitalizeLocalisation();
-            UpdateListBoxWithKeys();
-            UpdateComboBoxWithTags();
+            UpdateUI();
         }
 
         private void InitalizeLocalisation()
@@ -66,10 +65,18 @@ namespace Localisation_System
             localiser.Initialize();
         }
 
+        private void UpdateUI()
+        {
+            UpdateListBoxWithKeys();
+            UpdateComboBoxWithTags();
+        }
+
         private void UpdateListBoxWithKeys()
         {
             localisationKeysListBox.Items.Clear();
-            localiser.GetAllKeys().ToList().ForEach(key =>
+
+            List<string> keys = localiser.GetAllKeys().ToList();
+            keys.ForEach(key =>
             {
                 if (key.StartsWith(localisedKeysSearchTextBox.Text, StringComparison.CurrentCultureIgnoreCase))
                     localisationKeysListBox.Items.Add(key);
@@ -98,6 +105,20 @@ namespace Localisation_System
         {
             SaveChanges();
             localiser.SaveViaDialog();
+        }
+
+        private void addKeyButton_Click(object sender, EventArgs e)
+        {
+            localiser.AddKey(newKeyTextBox.Text);
+            newKeyTextBox.Text = "";
+            UpdateUI();
+        }
+
+        private void addTagButton_Click(object sender, EventArgs e)
+        {
+            localiser.AddTag(newTagTextBox.Text);
+            newTagTextBox.Text = "";
+            UpdateUI();
         }
     }
 }

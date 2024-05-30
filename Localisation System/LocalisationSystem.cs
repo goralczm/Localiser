@@ -19,8 +19,10 @@
 
         public void UpdateDictionaries()
         {
-            UpdateSingleLanguage("en");
-            UpdateSingleLanguage("pl");
+            List<string> tags = _csvLoader.GetTags();
+
+            foreach (string tag in tags)
+                UpdateSingleLanguage(tag);
         }
 
         private void UpdateSingleLanguage(string tag)
@@ -49,6 +51,33 @@
             _localisedTextsByTag[tag][key] = value;
         }
 
+        public void AddKey(string key)
+        {
+            if (key == "")
+                return;
+
+            var tags = GetTags();
+
+            foreach (string tag in tags)
+            {
+                if (_localisedTextsByTag[tag].ContainsKey(key))
+                    continue;
+
+                _localisedTextsByTag[tag].Add(key, "");
+            }
+        }
+
+        public void AddTag(string tag)
+        {
+            if (tag == "")
+                return;
+
+            if (_localisedTextsByTag.ContainsKey(tag))
+                return;
+
+            _localisedTextsByTag.Add(tag, new Dictionary<string, string>());
+        }
+
         public void SaveViaDialog()
         {
             _csvSaver.SaveFileViaDialog(_localisedTextsByTag);
@@ -72,6 +101,9 @@
 
         public IEnumerable<string> GetAllKeys()
         {
+            if (_localisedTextsByTag.Count == 0)
+                return Enumerable.Empty<string>();
+
             return _localisedTextsByTag.First().Value.Keys;
         }
     }
