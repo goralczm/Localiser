@@ -1,3 +1,5 @@
+using System.Windows.Forms;
+
 namespace Localisation_System
 {
     public partial class Localiser : Form
@@ -23,8 +25,8 @@ namespace Localisation_System
 
         private KeyValuePair<string, string> GetCurrentTagAndKey()
         {
-            string tag = "";
-            string key = "";
+            string? tag = "";
+            string? key = "";
 
             if (localisationTagsComboBox.SelectedItem != null)
                 tag = localisationTagsComboBox.SelectedItem.ToString();
@@ -56,12 +58,14 @@ namespace Localisation_System
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InitalizeLocalisation();
-            UpdateUI();
         }
 
         private void InitalizeLocalisation()
         {
             localiser = new LocalisationSystem();
+            localiser.OnKeysChanged += UpdateUI;
+            localiser.OnTagsChanged += UpdateUI;
+
             localiser.Initialize();
         }
 
@@ -91,7 +95,7 @@ namespace Localisation_System
                 localisationTagsComboBox.Items.Add(tag);
             });
 
-            if (localisationTagsComboBox.Items.Count > 0)
+            if (localisationTagsComboBox.SelectedIndex == -1 && localisationTagsComboBox.Items.Count > 0)
                 localisationTagsComboBox.SelectedIndex = 0;
         }
 
@@ -111,14 +115,31 @@ namespace Localisation_System
         {
             localiser.AddKey(newKeyTextBox.Text);
             newKeyTextBox.Text = "";
-            UpdateUI();
         }
 
         private void addTagButton_Click(object sender, EventArgs e)
         {
             localiser.AddTag(newTagTextBox.Text);
             newTagTextBox.Text = "";
-            UpdateUI();
+        }
+
+        private void renameKeyButton_Click(object sender, EventArgs e)
+        {
+            string? key = "";
+            if (localisationKeysListBox.SelectedItem != null)
+                key = localisationKeysListBox.SelectedItem.ToString();
+
+            string newName = renameKeyTextBox.Text;
+            localiser.RenameKey(key, newName);
+        }
+
+        private void deleteKeyButton_Click(object sender, EventArgs e)
+        {
+            string? key = "";
+            if (localisationKeysListBox.SelectedItem != null)
+                key = localisationKeysListBox.SelectedItem.ToString();
+
+            localiser.RemoveKey(key);
         }
     }
 }

@@ -45,7 +45,10 @@
             label1 = new Label();
             panel1 = new Panel();
             panel2 = new Panel();
+            renameKeyButton = new Button();
+            renameKeyTextBox = new TextBox();
             label2 = new Label();
+            deleteKeyButton = new Button();
             menuStrip1.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -196,6 +199,9 @@
             // panel2
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            panel2.Controls.Add(deleteKeyButton);
+            panel2.Controls.Add(renameKeyButton);
+            panel2.Controls.Add(renameKeyTextBox);
             panel2.Controls.Add(label2);
             panel2.Controls.Add(addTagButton);
             panel2.Controls.Add(newTagTextBox);
@@ -203,8 +209,25 @@
             panel2.Controls.Add(addKeyButton);
             panel2.Location = new Point(524, 30);
             panel2.Name = "panel2";
-            panel2.Size = new Size(205, 88);
+            panel2.Size = new Size(205, 382);
             panel2.TabIndex = 14;
+            // 
+            // renameKeyButton
+            // 
+            renameKeyButton.Location = new Point(125, 86);
+            renameKeyButton.Name = "renameKeyButton";
+            renameKeyButton.Size = new Size(75, 23);
+            renameKeyButton.TabIndex = 14;
+            renameKeyButton.Text = "Rename Key";
+            renameKeyButton.UseVisualStyleBackColor = true;
+            renameKeyButton.Click += renameKeyButton_Click;
+            // 
+            // renameKeyTextBox
+            // 
+            renameKeyTextBox.Location = new Point(3, 86);
+            renameKeyTextBox.Name = "renameKeyTextBox";
+            renameKeyTextBox.Size = new Size(116, 23);
+            renameKeyTextBox.TabIndex = 13;
             // 
             // label2
             // 
@@ -212,9 +235,19 @@
             label2.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
             label2.Location = new Point(0, 0);
             label2.Name = "label2";
-            label2.Size = new Size(152, 25);
+            label2.Size = new Size(181, 25);
             label2.TabIndex = 12;
-            label2.Text = "Add Key and Tag";
+            label2.Text = "Key and Tag Utilities";
+            // 
+            // deleteKeyButton
+            // 
+            deleteKeyButton.Location = new Point(3, 115);
+            deleteKeyButton.Name = "deleteKeyButton";
+            deleteKeyButton.Size = new Size(197, 23);
+            deleteKeyButton.TabIndex = 15;
+            deleteKeyButton.Text = "Delete Key";
+            deleteKeyButton.UseVisualStyleBackColor = true;
+            deleteKeyButton.Click += deleteKeyButton_Click;
             // 
             // Localiser
             // 
@@ -258,5 +291,8 @@
         private Panel panel1;
         private Panel panel2;
         private Label label2;
+        private Button renameKeyButton;
+        private TextBox renameKeyTextBox;
+        private Button deleteKeyButton;
     }
 }

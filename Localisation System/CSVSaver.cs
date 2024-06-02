@@ -8,7 +8,6 @@ namespace Localisation_System
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
-                saveFileDialog.InitialDirectory = "c:\\";
                 saveFileDialog.Filter = "csv files (*.csv)|*.csv";
                 saveFileDialog.FilterIndex = 2;
                 saveFileDialog.RestoreDirectory = true;

@@ -9,6 +9,9 @@
         private CSVLoader _csvLoader = new CSVLoader();
         private CSVSaver _csvSaver = new CSVSaver();
 
+        public Action OnKeysChanged;
+        public Action OnTagsChanged;
+
         public void Initialize()
         {
             _csvLoader = new CSVLoader();
@@ -23,6 +26,9 @@
 
             foreach (string tag in tags)
                 UpdateSingleLanguage(tag);
+
+            OnKeysChanged?.Invoke();
+            OnTagsChanged?.Invoke();
         }
 
         private void UpdateSingleLanguage(string tag)
@@ -49,6 +55,8 @@
                 return;
 
             _localisedTextsByTag[tag][key] = value;
+
+            OnKeysChanged?.Invoke();
         }
 
         public void AddKey(string key)
@@ -57,7 +65,6 @@
                 return;
 
             var tags = GetTags();
-
             foreach (string tag in tags)
             {
                 if (_localisedTextsByTag[tag].ContainsKey(key))
@@ -65,6 +72,40 @@
 
                 _localisedTextsByTag[tag].Add(key, "");
             }
+
+            OnKeysChanged?.Invoke();
+        }
+
+        public void RenameKey(string key, string newName)
+        {
+            var tags = GetTags();
+            foreach (string tag in tags)
+            {
+                if (!_localisedTextsByTag[tag].ContainsKey(key))
+                    continue;
+
+                if (_localisedTextsByTag[tag].ContainsKey(newName))
+                    continue;
+
+                _localisedTextsByTag[tag].Add(newName, GetLocalisedValue(tag, key));
+                _localisedTextsByTag[tag].Remove(key);
+            }
+
+            OnKeysChanged?.Invoke();
+        }
+
+        public void RemoveKey(string key)
+        {
+            var tags = GetTags();
+            foreach (string tag in tags)
+            {
+                if (!_localisedTextsByTag[tag].ContainsKey(key))
+                    continue;
+
+                _localisedTextsByTag[tag].Remove(key);
+            }
+
+            OnKeysChanged?.Invoke();
         }
 
         public void AddTag(string tag)
@@ -76,6 +117,8 @@
                 return;
 
             _localisedTextsByTag.Add(tag, new Dictionary<string, string>());
+
+            OnTagsChanged?.Invoke();
         }
 
         public void SaveViaDialog()
@@ -104,7 +147,7 @@
             if (_localisedTextsByTag.Count == 0)
                 return Enumerable.Empty<string>();
 
-            return _localisedTextsByTag.First().Value.Keys;
+            return _localisedTextsByTag.FirstOrDefault().Value.Keys;
         }
     }
 }
