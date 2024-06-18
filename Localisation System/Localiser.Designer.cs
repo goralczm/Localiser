@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             localisationKeysListBox = new ListBox();
-            localisationTagsComboBox = new ComboBox();
-            localisedTextRichTextBox = new RichTextBox();
+            localisationTagsComboBox1 = new ComboBox();
+            localisedTextRichTextBox1 = new RichTextBox();
             localisedKeysSearchTextBox = new TextBox();
             saveButton = new Button();
             menuStrip1 = new MenuStrip();
@@ -38,17 +38,18 @@
             openToolStripMenuItem = new ToolStripMenuItem();
             saveToolStripMenuItem = new ToolStripMenuItem();
             saveAsToolStripMenuItem = new ToolStripMenuItem();
-            newKeyTextBox = new TextBox();
             addKeyButton = new Button();
             addTagButton = new Button();
             newTagTextBox = new TextBox();
             label1 = new Label();
             panel1 = new Panel();
             panel2 = new Panel();
+            deleteKeyButton = new Button();
             renameKeyButton = new Button();
             renameKeyTextBox = new TextBox();
             label2 = new Label();
-            deleteKeyButton = new Button();
+            localisedTextRichTextBox2 = new RichTextBox();
+            localisationTagsComboBox2 = new ComboBox();
             menuStrip1.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -64,29 +65,29 @@
             localisationKeysListBox.Size = new Size(243, 349);
             localisationKeysListBox.TabIndex = 1;
             // 
-            // localisationTagsComboBox
+            // localisationTagsComboBox1
             // 
-            localisationTagsComboBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            localisationTagsComboBox.FormattingEnabled = true;
-            localisationTagsComboBox.Location = new Point(118, 3);
-            localisationTagsComboBox.Name = "localisationTagsComboBox";
-            localisationTagsComboBox.Size = new Size(121, 23);
-            localisationTagsComboBox.TabIndex = 2;
+            localisationTagsComboBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            localisationTagsComboBox1.FormattingEnabled = true;
+            localisationTagsComboBox1.Location = new Point(261, 26);
+            localisationTagsComboBox1.Name = "localisationTagsComboBox1";
+            localisationTagsComboBox1.Size = new Size(117, 23);
+            localisationTagsComboBox1.TabIndex = 2;
             // 
-            // localisedTextRichTextBox
+            // localisedTextRichTextBox1
             // 
-            localisedTextRichTextBox.Location = new Point(261, 27);
-            localisedTextRichTextBox.Name = "localisedTextRichTextBox";
-            localisedTextRichTextBox.Size = new Size(251, 406);
-            localisedTextRichTextBox.TabIndex = 3;
-            localisedTextRichTextBox.Text = "";
+            localisedTextRichTextBox1.Location = new Point(261, 55);
+            localisedTextRichTextBox1.Name = "localisedTextRichTextBox1";
+            localisedTextRichTextBox1.Size = new Size(117, 378);
+            localisedTextRichTextBox1.TabIndex = 3;
+            localisedTextRichTextBox1.Text = "";
             // 
             // localisedKeysSearchTextBox
             // 
             localisedKeysSearchTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             localisedKeysSearchTextBox.Location = new Point(0, 28);
             localisedKeysSearchTextBox.Name = "localisedKeysSearchTextBox";
-            localisedKeysSearchTextBox.Size = new Size(240, 23);
+            localisedKeysSearchTextBox.Size = new Size(162, 23);
             localisedKeysSearchTextBox.TabIndex = 4;
             localisedKeysSearchTextBox.TextChanged += localisedKeysSearchTextBox_TextChanged;
             // 
@@ -141,16 +142,9 @@
             saveAsToolStripMenuItem.Text = "Save As";
             saveAsToolStripMenuItem.Click += saveAsToolStripMenuItem_Click;
             // 
-            // newKeyTextBox
-            // 
-            newKeyTextBox.Location = new Point(3, 28);
-            newKeyTextBox.Name = "newKeyTextBox";
-            newKeyTextBox.Size = new Size(116, 23);
-            newKeyTextBox.TabIndex = 8;
-            // 
             // addKeyButton
             // 
-            addKeyButton.Location = new Point(125, 27);
+            addKeyButton.Location = new Point(168, 28);
             addKeyButton.Name = "addKeyButton";
             addKeyButton.Size = new Size(75, 23);
             addKeyButton.TabIndex = 9;
@@ -160,7 +154,7 @@
             // 
             // addTagButton
             // 
-            addTagButton.Location = new Point(125, 56);
+            addTagButton.Location = new Point(125, 27);
             addTagButton.Name = "addTagButton";
             addTagButton.Size = new Size(75, 23);
             addTagButton.TabIndex = 10;
@@ -170,7 +164,7 @@
             // 
             // newTagTextBox
             // 
-            newTagTextBox.Location = new Point(3, 57);
+            newTagTextBox.Location = new Point(3, 28);
             newTagTextBox.Name = "newTagTextBox";
             newTagTextBox.Size = new Size(116, 23);
             newTagTextBox.TabIndex = 11;
@@ -190,7 +184,7 @@
             panel1.Controls.Add(label1);
             panel1.Controls.Add(localisedKeysSearchTextBox);
             panel1.Controls.Add(localisationKeysListBox);
-            panel1.Controls.Add(localisationTagsComboBox);
+            panel1.Controls.Add(addKeyButton);
             panel1.Location = new Point(12, 27);
             panel1.Name = "panel1";
             panel1.Size = new Size(243, 412);
@@ -205,16 +199,24 @@
             panel2.Controls.Add(label2);
             panel2.Controls.Add(addTagButton);
             panel2.Controls.Add(newTagTextBox);
-            panel2.Controls.Add(newKeyTextBox);
-            panel2.Controls.Add(addKeyButton);
             panel2.Location = new Point(524, 30);
             panel2.Name = "panel2";
             panel2.Size = new Size(205, 382);
             panel2.TabIndex = 14;
             // 
+            // deleteKeyButton
+            // 
+            deleteKeyButton.Location = new Point(3, 86);
+            deleteKeyButton.Name = "deleteKeyButton";
+            deleteKeyButton.Size = new Size(197, 23);
+            deleteKeyButton.TabIndex = 15;
+            deleteKeyButton.Text = "Delete Key";
+            deleteKeyButton.UseVisualStyleBackColor = true;
+            deleteKeyButton.Click += deleteKeyButton_Click;
+            // 
             // renameKeyButton
             // 
-            renameKeyButton.Location = new Point(125, 86);
+            renameKeyButton.Location = new Point(125, 57);
             renameKeyButton.Name = "renameKeyButton";
             renameKeyButton.Size = new Size(75, 23);
             renameKeyButton.TabIndex = 14;
@@ -224,7 +226,7 @@
             // 
             // renameKeyTextBox
             // 
-            renameKeyTextBox.Location = new Point(3, 86);
+            renameKeyTextBox.Location = new Point(3, 57);
             renameKeyTextBox.Name = "renameKeyTextBox";
             renameKeyTextBox.Size = new Size(116, 23);
             renameKeyTextBox.TabIndex = 13;
@@ -239,15 +241,22 @@
             label2.TabIndex = 12;
             label2.Text = "Key and Tag Utilities";
             // 
-            // deleteKeyButton
+            // localisedTextRichTextBox2
             // 
-            deleteKeyButton.Location = new Point(3, 115);
-            deleteKeyButton.Name = "deleteKeyButton";
-            deleteKeyButton.Size = new Size(197, 23);
-            deleteKeyButton.TabIndex = 15;
-            deleteKeyButton.Text = "Delete Key";
-            deleteKeyButton.UseVisualStyleBackColor = true;
-            deleteKeyButton.Click += deleteKeyButton_Click;
+            localisedTextRichTextBox2.Location = new Point(384, 55);
+            localisedTextRichTextBox2.Name = "localisedTextRichTextBox2";
+            localisedTextRichTextBox2.Size = new Size(117, 378);
+            localisedTextRichTextBox2.TabIndex = 3;
+            localisedTextRichTextBox2.Text = "";
+            // 
+            // localisationTagsComboBox2
+            // 
+            localisationTagsComboBox2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            localisationTagsComboBox2.FormattingEnabled = true;
+            localisationTagsComboBox2.Location = new Point(384, 26);
+            localisationTagsComboBox2.Name = "localisationTagsComboBox2";
+            localisationTagsComboBox2.Size = new Size(117, 23);
+            localisationTagsComboBox2.TabIndex = 2;
             // 
             // Localiser
             // 
@@ -257,7 +266,10 @@
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(saveButton);
-            Controls.Add(localisedTextRichTextBox);
+            Controls.Add(localisationTagsComboBox2);
+            Controls.Add(localisationTagsComboBox1);
+            Controls.Add(localisedTextRichTextBox2);
+            Controls.Add(localisedTextRichTextBox1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "Localiser";
@@ -274,8 +286,8 @@
 
         #endregion
         private ListBox localisationKeysListBox;
-        private ComboBox localisationTagsComboBox;
-        private RichTextBox localisedTextRichTextBox;
+        private ComboBox localisationTagsComboBox1;
+        private RichTextBox localisedTextRichTextBox1;
         private TextBox localisedKeysSearchTextBox;
         private Button saveButton;
         private MenuStrip menuStrip1;
@@ -283,7 +295,6 @@
         private ToolStripMenuItem openToolStripMenuItem;
         private ToolStripMenuItem saveToolStripMenuItem;
         private ToolStripMenuItem saveAsToolStripMenuItem;
-        private TextBox newKeyTextBox;
         private Button addKeyButton;
         private Button addTagButton;
         private TextBox newTagTextBox;
@@ -294,5 +305,7 @@
         private Button renameKeyButton;
         private TextBox renameKeyTextBox;
         private Button deleteKeyButton;
+        private RichTextBox localisedTextRichTextBox2;
+        private ComboBox localisationTagsComboBox2;
     }
 }

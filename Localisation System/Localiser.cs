@@ -11,25 +11,30 @@ namespace Localisation_System
             InitializeComponent();
 
             localisationKeysListBox.SelectedIndexChanged += UpdateLocalisedText;
-            localisationTagsComboBox.SelectedIndexChanged += UpdateLocalisedText;
+            localisationTagsComboBox1.SelectedIndexChanged += UpdateLocalisedText;
+            localisationTagsComboBox2.SelectedIndexChanged += UpdateLocalisedText;
         }
 
         private void UpdateLocalisedText(object? sender, EventArgs e)
         {
-            KeyValuePair<string, string> tagAndKey = GetCurrentTagAndKey();
+            KeyValuePair<string, string> firstTagAndKey = GetCurrentTagAndKeyFromComboBox(localisationTagsComboBox1);
+            string firstValue = localiser.GetLocalisedValue(firstTagAndKey.Key, firstTagAndKey.Value);
+            localisedTextRichTextBox1.Text = firstValue;
 
-            string value = localiser.GetLocalisedValue(tagAndKey.Key, tagAndKey.Value);
+            KeyValuePair<string, string> secondTagAndKey = GetCurrentTagAndKeyFromComboBox(localisationTagsComboBox2);
+            string secondValue = localiser.GetLocalisedValue(secondTagAndKey.Key, secondTagAndKey.Value);
+            localisedTextRichTextBox2.Text = secondValue;
 
-            localisedTextRichTextBox.Text = value;
+            renameKeyTextBox.Text = firstTagAndKey.Value;
         }
 
-        private KeyValuePair<string, string> GetCurrentTagAndKey()
+        private KeyValuePair<string, string> GetCurrentTagAndKeyFromComboBox(ComboBox comboBox)
         {
             string? tag = "";
             string? key = "";
 
-            if (localisationTagsComboBox.SelectedItem != null)
-                tag = localisationTagsComboBox.SelectedItem.ToString();
+            if (comboBox.SelectedItem != null)
+                tag = comboBox.SelectedItem.ToString();
 
             if (localisationKeysListBox.SelectedItem != null)
                 key = localisationKeysListBox.SelectedItem.ToString();
@@ -49,10 +54,14 @@ namespace Localisation_System
 
         private void SaveChanges()
         {
-            KeyValuePair<string, string> tagAndKey = GetCurrentTagAndKey();
-            string newVal = localisedTextRichTextBox.Text;
+            KeyValuePair<string, string> firstTagAndKey = GetCurrentTagAndKeyFromComboBox(localisationTagsComboBox1);
+            KeyValuePair<string, string> secondTagAndKey = GetCurrentTagAndKeyFromComboBox(localisationTagsComboBox2);
 
-            localiser.UpdateKeyInTag(tagAndKey.Key, tagAndKey.Value, newVal);
+            string firstVal = localisedTextRichTextBox1.Text;
+            string secondVal = localisedTextRichTextBox2.Text;
+
+            localiser.UpdateKeyInTag(firstTagAndKey.Key, firstTagAndKey.Value, firstVal);
+            localiser.UpdateKeyInTag(secondTagAndKey.Key, secondTagAndKey.Value, secondVal);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -63,16 +72,10 @@ namespace Localisation_System
         private void InitalizeLocalisation()
         {
             localiser = new LocalisationSystem();
-            localiser.OnKeysChanged += UpdateUI;
-            localiser.OnTagsChanged += UpdateUI;
+            localiser.OnKeysChanged += UpdateListBoxWithKeys;
+            localiser.OnTagsChanged += UpdateComboBoxWithTags;
 
             localiser.Initialize();
-        }
-
-        private void UpdateUI()
-        {
-            UpdateListBoxWithKeys();
-            UpdateComboBoxWithTags();
         }
 
         private void UpdateListBoxWithKeys()
@@ -82,39 +85,41 @@ namespace Localisation_System
             List<string> keys = localiser.GetAllKeys().ToList();
             keys.ForEach(key =>
             {
-                if (key.StartsWith(localisedKeysSearchTextBox.Text, StringComparison.CurrentCultureIgnoreCase))
+                if (key.Contains(localisedKeysSearchTextBox.Text, StringComparison.CurrentCultureIgnoreCase))
                     localisationKeysListBox.Items.Add(key);
             });
         }
 
         private void UpdateComboBoxWithTags()
         {
-            localisationTagsComboBox.Items.Clear();
+            localisationTagsComboBox1.Items.Clear();
+            localisationTagsComboBox2.Items.Clear();
             localiser.GetTags().ToList().ForEach(tag =>
             {
-                localisationTagsComboBox.Items.Add(tag);
+                localisationTagsComboBox1.Items.Add(tag);
+                localisationTagsComboBox2.Items.Add(tag);
             });
 
-            if (localisationTagsComboBox.SelectedIndex == -1 && localisationTagsComboBox.Items.Count > 0)
-                localisationTagsComboBox.SelectedIndex = 0;
+            if (localisationTagsComboBox1.SelectedIndex == -1 && localisationTagsComboBox1.Items.Count > 0)
+                localisationTagsComboBox1.SelectedIndex = 0;
+
+            if (localisationTagsComboBox2.SelectedIndex == -1 && localisationTagsComboBox2.Items.Count > 0)
+                localisationTagsComboBox2.SelectedIndex = 0;
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveChanges();
             localiser.SaveViaPath();
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveChanges();
             localiser.SaveViaDialog();
         }
 
         private void addKeyButton_Click(object sender, EventArgs e)
         {
-            localiser.AddKey(newKeyTextBox.Text);
-            newKeyTextBox.Text = "";
+            localiser.AddKey(localisedKeysSearchTextBox.Text);
         }
 
         private void addTagButton_Click(object sender, EventArgs e)
